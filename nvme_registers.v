@@ -14,7 +14,7 @@ reg [31:0] CC;  // Controller Configuration
 reg [31:0] CSTS; // Controller Status
 
 // Read data output
-wire [31:0] rd_data_reg;
+reg [31:0] rd_data_reg; // Change this line from 'wire' to 'reg'
 assign rd_data = rd_data_reg;
 
 // Register write and read logic
