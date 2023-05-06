@@ -1,17 +1,18 @@
-# Makefile
-IVERILOG = iverilog
-VVP = vvp
-TARGET = nvme_top_tb
+IVERILOG := iverilog
+VVP := vvp
 
-all: $(TARGET).vcd
+all: nvme_top_tb.out
 
-$(TARGET).vcd: $(TARGET).out
-	$(VVP) $(TARGET).out
+nvme_top_tb.out: nvme_top.v nvme_registers.v nvme_top_tb.v nvme_cq.v nvme_sq.v
+	$(IVERILOG) -g2012 -o $@ $^
 
-$(TARGET).out: nvme_top.v nvme_registers.v $(TARGET).v
-	$(IVERILOG) -o $(TARGET).out nvme_top.v nvme_registers.v $(TARGET).v
+tests: nvme_registers_tb.out
+
+nvme_registers_tb.out: nvme_registers.v nvme_registers_tb.v
+	$(IVERILOG) -g2012 -o $@ $^
+	$(VVP) $@
 
 clean:
-	rm -f $(TARGET).out $(TARGET).vcd
+	rm -f nvme_top_tb.out nvme_registers_tb.out
 
-.PHONY: all clean
+.PHONY: all tests clean

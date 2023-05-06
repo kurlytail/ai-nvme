@@ -33,6 +33,18 @@ nvme_registers nvme_regs (
     .rd_data(reg_rd_data)
 );
 
+ nvme_cq cq (
+     .clk(clk),
+     .reset_n(reset_n)
+     // ...other signals as required
+ );
+
+  nvme_sq sq (
+     .clk(clk),
+     .reset_n(reset_n)
+     // ...other signals as required
+ );
+
 // NVMe command handling
 reg [15:0] cmd_reg;
 reg cmd_valid;
